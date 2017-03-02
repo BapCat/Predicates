@@ -4,7 +4,16 @@
 include __DIR__ . '/vendor/autoload.php';
 
 use BapCat\Collection\Collection;
-use BapCat\Predicates\Predicates as P;
+
+use function BapCat\Predicates\is;
+use function BapCat\Predicates\isNull;
+use function BapCat\Predicates\isEmpty;
+use function BapCat\Predicates\multi;
+use function BapCat\Predicates\newline;
+use function BapCat\Predicates\not;
+use function BapCat\Predicates\output;
+use function BapCat\Predicates\sprintf;
+use function BapCat\Predicates\wrap;
 
 BapCat\Phi\Phi::instance();
 
@@ -23,20 +32,20 @@ class Test {
 echo "First test\n";
 
 (new Collection(['a', 'b', null, 'c', 'd']))
-  ->filter(P::not(P::empty()))
-  ->map(P::wrap(Test::class))
-  ->each(P::multi(P::output(), P::newLine()));
+  ->filter(not(isEmpty()))
+  ->map(wrap(Test::class))
+  ->each(multi(output(), newline()));
 
 echo "\n";
 echo "Second test\n";
 
 (new Collection(['a', 'b', null, 'c', false, null, true, 'd']))
-  ->filter(P::null())
-  ->each(P::sprintf("Found null! Key=%s\n", [1]));
+  ->filter(isNull())
+  ->each(sprintf("Found null! Key=%s\n", [1]));
 
 echo "\n";
 echo "Third test\n";
 
 (new Collection(['a', 'b', null, 'c', 'd']))
-  ->filter(P::is(1, 1))
-  ->each(P::multi(P::output(), P::newLine()));
+  ->filter(is(1, 1))
+  ->each(multi(output(), newline()));
