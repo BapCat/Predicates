@@ -50,7 +50,7 @@ function multi(callable... $predicates) {
   };
 }
 
-function chain(callable... $predicates) {
+function all(callable... $predicates) {
   return function(...$args) use($predicates) {
     foreach($predicates as $predicate) {
       if(!$predicate(...$args)) {
