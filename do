@@ -5,6 +5,7 @@ include __DIR__ . '/vendor/autoload.php';
 
 use BapCat\Collection\Collection;
 
+use function BapCat\Predicates\chain;
 use function BapCat\Predicates\is;
 use function BapCat\Predicates\isNull;
 use function BapCat\Predicates\isEmpty;
@@ -49,3 +50,9 @@ echo "Third test\n";
 (new Collection(['a', 'b', null, 'c', 'd']))
   ->filter(is(1, 1))
   ->each(multi(output(), newline()));
+
+
+echo "\n";
+echo "Third test\n";
+
+(new Collection(['a', 'b', 'c']))->each(chain(wrap(Test::class), multi(function($arg) { echo get_class($arg), ' ', $arg; }, newline())));

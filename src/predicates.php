@@ -74,6 +74,18 @@ function any(callable... $predicates) {
   };
 }
 
+function chain(callable... $predicates) {
+  return function(...$args) use($predicates) {
+    $return = $args;
+    
+    foreach($predicates as $predicate) {
+      $return = [$predicate(...$return)];
+    }
+    
+    return $return;
+  };
+}
+
 function dump($use_arg = 0) {
   return function(...$args) use($use_arg) {
     var_dump($args[$use_arg]);
