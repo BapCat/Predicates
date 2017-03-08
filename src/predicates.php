@@ -42,6 +42,12 @@ function wrap($class, array $use_args = [0]) {
   };
 }
 
+function arrayKey($key, $use_arg = 0) {
+  return function(...$args) use($key, $use_arg) {
+    return $args[$use_arg][$key];
+  };
+}
+
 function multi(callable... $predicates) {
   return function(...$args) use($predicates) {
     foreach($predicates as $predicate) {
